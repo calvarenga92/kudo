@@ -1,4 +1,4 @@
-const CHAVE = 'kurio.token';
+const CHAVE = 'kudo.token';
 
 /** sessionStorage pode lançar em navegação privada: a sessão vive em memória nesse caso. */
 let memoria: string | null = null;

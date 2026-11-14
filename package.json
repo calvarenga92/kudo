@@ -1,5 +1,5 @@
 {
-  "name": "kurio-marketplace",
+  "name": "kudo-marketplace",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -58,6 +58,6 @@
     "typescript-eslint": "^8.43.0",
     "vite": "^7.1.6"
   },
-  "description": "Marketplace de NFTs — desafio técnico de front-end",
+  "description": "Kudo — marketplace de arte digital (projeto próprio de estudo de front-end)",
   "author": "Claudio Alvarenga"
 }

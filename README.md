@@ -1,12 +1,14 @@
-# Kurio — Marketplace de NFTs
+# Kudo — Marketplace de NFTs
 
-Desenvolvido por Claudio Alvarenga.
+Projeto próprio de Claudio Alvarenga, feito para estudar e praticar front-end. O Kudo é um marketplace de arte digital com catálogo, carrinho, checkout, perfil e atualizações em tempo real, rodando inteiramente no navegador.
 
-Desafio técnico de front-end. Marketplace completo com catálogo, carrinho, checkout, perfil e atualizações em tempo real, rodando inteiramente no navegador.
+É uma simulação: não há transação real nem dinheiro envolvido. O pagamento é simulado e os dados vêm de um servidor mock.
 
 Não existe backend: a API é simulada com MSW, e os eventos de tempo real têm um simulador local por trás da mesma interface do `socket.io-client`. Com as variáveis de ambiente apontando para serviços reais, nada disso entra no bundle.
 
 ## Design e fluxo de UX
+
+O layout visual de base partiu de um design de terceiros no Figma. Os arquivos abaixo documentam as telas e o fluxo de UX como estão implementados aqui.
 
 - [Telas no Figma](https://www.figma.com/design/uTnOgVhzcVUIGBXPrWHoCf?node-id=0-1)
 - [Fluxo de UX no Figma](https://www.figma.com/design/uTnOgVhzcVUIGBXPrWHoCf?node-id=25-155): compra e pagamento, com os cinco cenários de rede e o retry idempotente
@@ -20,7 +22,7 @@ npm install
 npm run dev
 ```
 
-Contas da simulação: `claudio@kurio.test` ou `marina@kurio.test`, senha `senha12345`.
+Contas da simulação: `claudio@kudo.test` ou `marina@kudo.test`, senha `senha12345`.
 
 ```bash
 npm run verificar    # typecheck + lint + build + testes
@@ -34,7 +36,7 @@ React 19 · TypeScript · Vite · Tailwind v4 · TanStack Router · TanStack Que
 
 ## O que está implementado
 
-| Área | Entregue |
+| Área | O que faz |
 |---|---|
 | Catálogo | Busca por texto, filtro por coleção, faixa de preço e disponibilidade, ordenação, paginação — tudo refletido na URL |
 | Peça | Galeria, seleção de edição, atributos, favoritar, adicionar ao carrinho |
@@ -121,7 +123,7 @@ O catálogo é navegável só pelo teclado até a peça, e isso tem teste.
 
 ## Testes
 
-78 testes Playwright, rodando em desktop e mobile:
+43 testes Playwright, cada um rodando em desktop e mobile (86 execuções):
 
 | Arquivo | Cobre |
 |---|---|
@@ -131,8 +133,10 @@ O catálogo é navegável só pelo teclado até a peça, e isso tem teste.
 | `tempo-real.spec.ts` | Conexão ativa, preço mudando sozinho, evento atrasado não regride o preço |
 | `acessibilidade.spec.ts` | Skip link, um `h1` por página, texto alternativo, navegação por teclado, `aria-pressed`, menu mobile |
 | `layout.spec.ts` | Nenhuma rota rola na horizontal, aviso de cenário ativo, em desktop e mobile |
+| `tema.spec.ts` | Troca de tema persistida, tema vindo da URL, navegação entre temas pelo teclado |
+| `migracao.spec.ts` | Estado salvo por versão anterior abre sem imagem quebrada |
 
-Três problemas reais apareceram nessa suíte e estão corrigidos no histórico:
+Quatro problemas reais apareceram nessa suíte e estão corrigidos no histórico:
 
 - a página de entrada não tinha `h1`;
 - o botão de favoritar ficava embaixo do link esticado do cartão, então clicar no coração levava para o detalhe;
@@ -150,6 +154,6 @@ O teste de ordenação de eventos foi reescrito depois de falhar sob execução 
 - **Zod.** A validação de parâmetro de busca é uma função de quinze linhas. Zod resolveria, mas são 12 KB para validar cinco campos.
 - **Gerenciador de estado global.** Estado de servidor está no TanStack Query e estado de navegação na URL. O que sobra é estado local de componente — não há o que gerenciar globalmente.
 
-## O que faria com mais tempo
+## Próximos passos
 
-- **Testes de componente** para os estados do cartão e do resumo, hoje cobertos só de ponta a ponta. É o único item desta lista que ficou de fora por prazo, não por decisão.
+- **Testes de componente** para os estados do cartão e do resumo, hoje cobertos só de ponta a ponta.

@@ -28,7 +28,7 @@ function Entrar() {
     <div className="conteudo flex justify-center py-16">
       <div className="w-full max-w-md rounded-xl border border-border-subtle bg-surface p-8">
         <h1 className="mb-6 text-title text-foreground">
-          {aba === 'entrar' ? 'Entrar na Kurio' : 'Criar conta na Kurio'}
+          {aba === 'entrar' ? 'Entrar na Kudo' : 'Criar conta na Kudo'}
         </h1>
 
         <div
@@ -60,8 +60,8 @@ function Entrar() {
         {aba === 'entrar' ? <FormularioEntrar /> : <FormularioCriar />}
 
         <p className="mt-6 border-t border-border-subtle pt-4 text-caption text-muted">
-          Contas da simulação: <span className="text-foreground">claudio@kurio.test</span> ou{' '}
-          <span className="text-foreground">marina@kurio.test</span>, senha{' '}
+          Contas da simulação: <span className="text-foreground">claudio@kudo.test</span> ou{' '}
+          <span className="text-foreground">marina@kudo.test</span>, senha{' '}
           <span className="text-foreground">senha12345</span>.
         </p>
       </div>

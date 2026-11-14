@@ -27,9 +27,9 @@ export function Cabecalho() {
         <Link
           to="/"
           className="text-2xl font-extrabold tracking-[-0.04em] text-foreground"
-          aria-label="Kurio, página inicial"
+          aria-label="Kudo, página inicial"
         >
-          Kurio
+          Kudo
         </Link>
 
         <nav aria-label="Principal" className="hidden md:block">

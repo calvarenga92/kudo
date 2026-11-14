@@ -15,7 +15,7 @@ test('estado salvo com as artes antigas abre sem imagem quebrada', async ({ page
 
   // simula o visitante antigo: mesmo estado, endereços da versão anterior
   await page.evaluate(() => {
-    const chave = 'kurio.mock.estado';
+    const chave = 'kudo.mock.estado';
     const atual = localStorage.getItem(chave);
     if (!atual) throw new Error('estado do mock não foi salvo');
     localStorage.setItem(chave, atual.replace(/(\/nfts\/nft-\d{2})\.png/g, '$1.svg'));

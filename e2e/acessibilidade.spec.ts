@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => { await limparEstado(page); });
 test('atalho pular para o conteudo aparece no primeiro Tab', async ({ page }) => {
   await page.goto('/');
   // o Tab precisa vir depois da montagem, senao o foco fica no body
-  await page.getByRole('link', { name: 'Kurio, página inicial' }).waitFor();
+  await page.getByRole('link', { name: 'Kudo, página inicial' }).waitFor();
   await page.locator('body').press('Tab');
   await expect(page.getByRole('link', { name: 'Pular para o conteúdo' })).toBeFocused();
 });
@@ -40,7 +40,7 @@ test('o catalogo e navegavel so pelo teclado ate a peca', async ({ page }) => {
 
 test('botao de favorito expoe o estado por aria-pressed', async ({ page }) => {
   await page.goto('/entrar');
-  await page.getByLabel('E-mail').fill('claudio@kurio.test');
+  await page.getByLabel('E-mail').fill('claudio@kudo.test');
   await page.getByLabel('Senha').fill('senha12345');
   await page.getByRole('button', { name: 'Entrar' }).click();
   await page.waitForURL('/');

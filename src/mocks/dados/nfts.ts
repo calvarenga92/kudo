@@ -102,14 +102,14 @@ export const USUARIOS = [
   {
     id: 'usr-1',
     nome: 'Claudio Alvarenga',
-    email: 'claudio@kurio.test',
+    email: 'claudio@kudo.test',
     senha: 'senha12345',
     avatarUrl: null,
   },
   {
     id: 'usr-2',
     nome: 'Marina Rocha',
-    email: 'marina@kurio.test',
+    email: 'marina@kudo.test',
     senha: 'senha12345',
     avatarUrl: null,
   },

@@ -18,7 +18,7 @@ export const CENARIOS = {
 
 export type Cenario = keyof typeof CENARIOS;
 
-const CHAVE = 'kurio.mock.cenario';
+const CHAVE = 'kudo.mock.cenario';
 
 export function cenarioAtual(): Cenario {
   try {

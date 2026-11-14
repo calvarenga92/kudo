@@ -32,10 +32,10 @@ export function Rodape() {
           className="flex flex-col gap-4 border-b border-border-subtle bg-surface-2 px-6 py-5
                      text-caption text-muted sm:flex-row sm:items-center sm:justify-between"
         >
-          <span className="text-label font-extrabold tracking-[-0.04em] text-foreground">Kurio</span>
+          <span className="text-label font-extrabold tracking-[-0.04em] text-foreground">Kudo</span>
           <span>Feito para colecionadores, criadores e cultura</span>
-          <a href="mailto:contato@kurio.test" className="hover:text-primary">
-            contato@kurio.test
+          <a href="mailto:contato@kudo.test" className="hover:text-primary">
+            contato@kudo.test
           </a>
           <a href="tel:+551140028922" className="hover:text-primary">
             +55 11 4002 8922
@@ -94,7 +94,7 @@ export function Rodape() {
           className="flex flex-col items-center gap-1 border-t border-border-subtle
                      px-6 py-6 text-center text-caption text-muted"
         >
-          <p>© 2026 Kurio. Propriedade digital para todos.</p>
+          <p>© 2026 Kudo. Propriedade digital para todos.</p>
           <p>Desenvolvido por Claudio Alvarenga</p>
         </div>
       </div>

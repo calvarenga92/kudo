@@ -20,7 +20,7 @@ export interface Estado {
   sequenciaEvento: number;
 }
 
-const CHAVE = 'kurio.mock.estado';
+const CHAVE = 'kudo.mock.estado';
 
 function carrinhoVazio(): Carrinho {
   return { itens: [], cupom: null };

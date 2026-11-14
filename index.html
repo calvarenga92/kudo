@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kurio — Marketplace de NFTs</title>
+    <title>Kudo — Marketplace de NFTs</title>
     <meta
       name="description"
       content="Descubra NFTs selecionados de criadores emergentes e consagrados. Colecione arte digital rara e apoie artistas."
@@ -19,8 +19,8 @@
       // Aplica o tema salvo antes da primeira pintura, para não piscar o tema padrão.
       try {
         var daUrl = new URLSearchParams(location.search).get('tema');
-        var tema = daUrl || localStorage.getItem('kurio:tema');
-        if (daUrl) localStorage.setItem('kurio:tema', daUrl);
+        var tema = daUrl || localStorage.getItem('kudo:tema');
+        if (daUrl) localStorage.setItem('kudo:tema', daUrl);
         if (tema === 'quente' || tema === 'neon' || tema === 'eletrica') {
           document.documentElement.dataset.tema = tema;
         }

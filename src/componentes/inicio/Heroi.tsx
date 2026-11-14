@@ -17,7 +17,7 @@ export function Heroi() {
 
         <div className="relative flex flex-col gap-6">
           <p className="text-caption font-bold uppercase tracking-[0.12em] opacity-85">
-            Bem-vindo à Kurio
+            Bem-vindo à Kudo
           </p>
 
           <h1 className="text-display lg:text-display-lg">

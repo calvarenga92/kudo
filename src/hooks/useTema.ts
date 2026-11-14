@@ -8,7 +8,7 @@ export const TEMAS = [
 
 export type Tema = (typeof TEMAS)[number]['id'];
 
-const CHAVE = 'kurio:tema';
+const CHAVE = 'kudo:tema';
 const PADRAO: Tema = 'quente';
 const ouvintes = new Set<() => void>();
 

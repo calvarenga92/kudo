@@ -30,7 +30,7 @@ export function MenuMobile({ itens }: Props) {
         >
           <div className="mb-4 flex items-center justify-between">
             <Dialog.Title className="text-label font-extrabold tracking-[-0.04em] text-foreground">
-              Kurio
+              Kudo
             </Dialog.Title>
             <Dialog.Close
               className="flex size-9 items-center justify-center text-muted
