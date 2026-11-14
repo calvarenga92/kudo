@@ -34,6 +34,21 @@ test('cupom valido desconta e cupom invalido avisa', async ({ page }) => {
   await expect(page.getByRole('alert')).toHaveText('Cupom não encontrado.');
 });
 
+test('valores do resumo aparecem no padrao brasileiro', async ({ page }) => {
+  await adicionarPrimeiraPeca(page);
+  await page.goto('/carrinho');
+
+  const valor = (termo: string) =>
+    page.locator('dt', { hasText: termo }).locator('xpath=following-sibling::dd');
+
+  await expect(valor('Taxa de rede')).toHaveText('0,0042 ETH');
+
+  await page.getByLabel('Código promocional').fill('KURIO10');
+  await page.getByRole('button', { name: 'Aplicar' }).click();
+  await expect(valor('Desconto')).toHaveText(/^\(-\) \d{1,3}(\.\d{3})*,\d+ ETH$/);
+  await expect(page.locator('dd').last()).toHaveText(/^\d{1,3}(\.\d{3})*,\d+ ETH$/);
+});
+
 test('cupom expirado tem mensagem propria', async ({ page }) => {
   await adicionarPrimeiraPeca(page);
   await page.goto('/carrinho');

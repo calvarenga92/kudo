@@ -4,6 +4,7 @@ import * as Slider from '@radix-ui/react-slider';
 import { consultaFaixaPreco } from '@/api/consultas';
 import { Esqueleto } from '@/componentes/Estados';
 import { Botao } from '@/componentes/ui/Botao';
+import { paraExibicao } from '@/lib/decimal';
 
 interface Props {
   precoMin?: number;
@@ -15,7 +16,7 @@ interface Props {
 const ESCALA = 100;
 const paraPasso = (eth: string | number) => Math.round(Number(eth) * ESCALA);
 const paraEth = (passo: number) => passo / ESCALA;
-const exibir = (passo: number) => paraEth(passo).toFixed(2);
+const exibir = (passo: number) => paraExibicao(paraEth(passo).toFixed(2));
 
 export function FiltroPreco({ precoMin, precoMax, aoAplicar }: Props) {
   const { data: faixa, isPending } = useQuery(consultaFaixaPreco);

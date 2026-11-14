@@ -51,3 +51,7 @@ export async function adicionarPrimeiraPeca(pagina: Page) {
   await pagina.getByRole('button', { name: /Comprar/ }).click();
   await pagina.getByText('Adicionado ao carrinho.').waitFor();
 }
+
+/** Lê um preço exibido no padrão brasileiro ("1.234,56 ETH") como número. */
+export const precoEmNumero = (texto: string) =>
+  Number(texto.replace(' ETH', '').replace(/\./g, '').replace(',', '.'));

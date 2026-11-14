@@ -105,6 +105,7 @@ A aplicação abre WebSocket de verdade e o chunk do `socket.io-client` (42 KB) 
 - **Login responde igual para e-mail inexistente e senha errada.** Respostas diferentes permitem enumerar quem tem conta, insumo para phishing e força bruta.
 - **Token em `sessionStorage`, com fallback em memória.** Morre ao fechar a aba; leituras em `try/catch` porque em navegação privada o acesso pode lançar.
 - **Mock e socket carregados sob demanda.** Com `VITE_API_URL` e `VITE_SOCKET_URL` definidas, nenhum dos dois é baixado pelo usuário.
+- **Valores exibidos no padrão brasileiro.** Vírgula separa as casas decimais e ponto agrupa os milhares (`1.234,5 ETH`, `0,0042 ETH`). Só a camada de exibição troca o separador (`formatarEth` e `paraExibicao` em `src/lib/decimal.ts`); o valor continua trafegando e sendo somado no formato com ponto, em 18 casas.
 - **Quatro estados em cada tela.** Carregando, erro, vazio e sem permissão — não só o caminho feliz. Lista vazia e sessão expirada são os que mais escapam e viram tela branca em produção.
 
 ## Sobre as imagens
@@ -123,13 +124,13 @@ O catálogo é navegável só pelo teclado até a peça, e isso tem teste.
 
 ## Testes
 
-43 testes Playwright, cada um rodando em desktop e mobile (86 execuções):
+44 testes Playwright, cada um rodando em desktop e mobile (88 execuções):
 
 | Arquivo | Cobre |
 |---|---|
 | `catalogo.spec.ts` | Listagem, busca, filtros (coleção e faixa de preço), ordenação, paginação, lista vazia, erro do servidor |
 | `sessao.spec.ts` | Entrada, credenciais inválidas, validação de cadastro, rota protegida, sessão expirada |
-| `compra.spec.ts` | Carrinho vazio, quantidade, cupom válido/inválido/expirado, compra completa, pagamento recusado, recibo após recarregar |
+| `compra.spec.ts` | Carrinho vazio, quantidade, cupom válido/inválido/expirado, valores no padrão brasileiro, compra completa, pagamento recusado, recibo após recarregar |
 | `tempo-real.spec.ts` | Conexão ativa, preço mudando sozinho, evento atrasado não regride o preço |
 | `acessibilidade.spec.ts` | Skip link, um `h1` por página, texto alternativo, navegação por teclado, `aria-pressed`, menu mobile |
 | `layout.spec.ts` | Nenhuma rota rola na horizontal, aviso de cenário ativo, em desktop e mobile |

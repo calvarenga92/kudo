@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { aguardarCatalogo, cartoes, limparEstado, url } from './apoio';
+import { aguardarCatalogo, cartoes, limparEstado, precoEmNumero, url } from './apoio';
 
 test.beforeEach(async ({ page }) => { await limparEstado(page); });
 
@@ -27,7 +27,7 @@ test('ordenacao por menor preco coloca a peca mais barata primeiro', async ({ pa
   await page.goto(url('/', { ordenacao: 'preco-asc' }));
   await aguardarCatalogo(page);
   const precos = await cartoes(page).getByTestId('preco').allTextContents();
-  const numeros = precos.map((p) => Number(p.replace(' ETH', '')));
+  const numeros = precos.map(precoEmNumero);
   expect(numeros).toEqual([...numeros].sort((a, b) => a - b));
 });
 
@@ -87,7 +87,7 @@ test('faixa de preço vinda da URL filtra o catálogo', async ({ page }) => {
 
   const precos = await cartoes(page).getByTestId('preco').allTextContents();
   expect(precos.length).toBeGreaterThan(0);
-  expect(precos.every((p) => Number(p.replace(' ETH', '')) <= 1)).toBe(true);
+  expect(precos.every((p) => precoEmNumero(p) <= 1)).toBe(true);
 });
 
 test('faixa inválida na URL é ignorada, não quebra a lista', async ({ page }) => {
@@ -99,8 +99,8 @@ test('faixa inválida na URL é ignorada, não quebra a lista', async ({ page })
 test('o controle de preço reflete a faixa que veio na URL', async ({ page }) => {
   await page.goto(url('/', { precoMin: '1', precoMax: '3' }));
   await aguardarCatalogo(page);
-  await expect(page.getByText(/^Preço:/)).toContainText('1.00');
-  await expect(page.getByText(/^Preço:/)).toContainText('3.00');
+  await expect(page.getByText(/^Preço:/)).toContainText('1,00');
+  await expect(page.getByText(/^Preço:/)).toContainText('3,00');
 });
 
 test('mover o controle e aplicar grava a faixa na URL', async ({ page }) => {
