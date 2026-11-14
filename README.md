@@ -53,7 +53,7 @@ React 19 · TypeScript · Vite · Tailwind v4 · TanStack Router · TanStack Que
 
 Quatro escolhas sustentam o resto. As outras estão no fim desta seção, em uma linha cada.
 
-As regras de dinheiro, cotação e idempotência não moram neste repositório: vêm do pacote [`@calvarenga92/kurio-regras`](https://www.npmjs.com/package/@calvarenga92/kurio-regras), o mesmo usado pelo [app mobile](https://github.com/calvarenga92/kurio-mobile). Assim, web e mobile calculam o mesmo total e tratam o reenvio do pagamento do mesmo jeito.
+As regras de dinheiro, cotação e idempotência não moram neste repositório: vêm do pacote [`@calvarenga92/kurio-regras`](https://www.npmjs.com/package/@calvarenga92/kurio-regras), o mesmo usado pelo [app mobile](https://github.com/calvarenga92/kudo-mobile). Assim, web e mobile calculam o mesmo total e tratam o reenvio do pagamento do mesmo jeito.
 
 ### Dinheiro nunca passa por ponto flutuante
 
