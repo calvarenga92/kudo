@@ -41,7 +41,7 @@ export function SeletorEdicao({ edicoes, selecionada, aoSelecionar }: Props) {
                 {formatarEth(edicao.precoEth)}
               </span>
               <span className="text-caption text-muted">
-                {esgotada ? 'Esgotada' : `${edicao.disponivel} disponíveis`}
+                {esgotada ? 'Esgotada' : `${edicao.disponivel} ${edicao.disponivel === 1 ? 'disponível' : 'disponíveis'}`}
               </span>
             </label>
           );
