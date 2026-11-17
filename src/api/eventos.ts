@@ -28,5 +28,5 @@ export interface EventosServidor {
 }
 
 export interface EventosCliente {
-  'session.identify': (dados: { usuarioId: string | null }) => void;
+  'session.identify': (dados: { usuarioId: string | null; token?: string | null }) => void;
 }
