@@ -1,6 +1,9 @@
 import axios, { AxiosError } from 'axios';
 import type { CodigoErro, CorpoErro } from './tipos';
 import { lerToken, limparToken } from '@/lib/token';
+import {
+  CABECALHO_CARRINHO, gravarCarrinhoVisitante, lerCarrinhoVisitante, limparCarrinhoVisitante,
+} from '@/lib/carrinhoVisitante';
 
 export const cliente = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? '/api',
@@ -10,6 +13,8 @@ export const cliente = axios.create({
 cliente.interceptors.request.use((config) => {
   const token = lerToken();
   if (token) config.headers.Authorization = `Bearer ${token}`;
+  const carrinho = lerCarrinhoVisitante();
+  if (carrinho) config.headers[CABECALHO_CARRINHO] = carrinho;
   return config;
 });
 
@@ -46,8 +51,18 @@ function normalizar(erro: unknown): ErroApi {
   );
 }
 
+/** Entrar ou se cadastrar leva o carrinho de visitante para a conta: o id deixa de valer. */
+const LEVA_CARRINHO = /^\/(sessao|contas)$/;
+
 cliente.interceptors.response.use(
-  (resposta) => resposta,
+  (resposta) => {
+    const carrinho = resposta.headers[CABECALHO_CARRINHO.toLowerCase()];
+    if (typeof carrinho === 'string' && carrinho) gravarCarrinhoVisitante(carrinho);
+    if (resposta.config.method === 'post' && LEVA_CARRINHO.test(resposta.config.url ?? '')) {
+      limparCarrinhoVisitante();
+    }
+    return resposta;
+  },
   (erro) => {
     const normalizado = normalizar(erro);
     if (normalizado.codigo === 'SESSAO_EXPIRADA') limparToken();
