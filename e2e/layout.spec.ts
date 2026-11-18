@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { aguardarCatalogo, limparEstado } from './apoio';
+import { aguardarCatalogo, limparEstado, soNoMock } from './apoio';
 
 test.beforeEach(async ({ page }) => { await limparEstado(page); });
 
@@ -41,6 +41,7 @@ test('catálogo com filtros aplicados continua dentro da tela', async ({ page })
  * abrisse um cenário de falha ficaria preso nele achando que o app quebrou.
  */
 test('cenário de simulação ativo fica visível e tem volta', async ({ page }) => {
+  soNoMock('o aviso de cenário é do MSW');
   await page.goto('/?cenario=lista-vazia');
   await expect(page.getByText(/Cenário de simulação ativo/)).toBeVisible();
 

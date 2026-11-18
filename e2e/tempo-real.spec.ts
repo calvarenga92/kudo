@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { aguardarCatalogo, cartoes, limparEstado, url } from './apoio';
+import { aguardarCatalogo, cartoes, limparEstado, soNoMock, url } from './apoio';
 
 test.beforeEach(async ({ page }) => { await limparEstado(page); });
 
@@ -12,6 +12,8 @@ test('conexao em tempo real fica ativa', async ({ page }) => {
 });
 
 test('preco do catalogo muda sozinho quando chega evento', async ({ page }) => {
+  // a API só emite quando o estoque muda de verdade (compra); o preço não oscila sozinho
+  soNoMock('eventos simulados de preço (?eventos=rapido)');
   await page.goto(url('/', { eventos: 'rapido' }));
   await aguardarCatalogo(page);
   const antes = await precos(page);
@@ -27,6 +29,7 @@ test('preco do catalogo muda sozinho quando chega evento', async ({ page }) => {
  * anterior antes do atual. Um preco nunca pode voltar a um valor ja substituido.
  */
 test('evento atrasado nao faz o preco regredir', async ({ page }) => {
+  soNoMock('cenário fora-de-ordem');
   await page.goto(url('/', { eventos: 'rapido', cenario: 'fora-de-ordem' }));
   await aguardarCatalogo(page);
 

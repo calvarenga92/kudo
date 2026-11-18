@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { aguardarCatalogo, cartoes, limparEstado } from './apoio';
+import { aguardarCatalogo, cartoes, entrarComContaNova, limparEstado } from './apoio';
 
 test.beforeEach(async ({ page }) => { await limparEstado(page); });
 
@@ -39,11 +39,8 @@ test('o catalogo e navegavel so pelo teclado ate a peca', async ({ page }) => {
 });
 
 test('botao de favorito expoe o estado por aria-pressed', async ({ page }) => {
-  await page.goto('/entrar');
-  await page.getByLabel('E-mail').fill('claudio@kudo.test');
-  await page.getByLabel('Senha').fill('senha12345');
-  await page.getByRole('button', { name: 'Entrar' }).click();
-  await page.waitForURL('/');
+  // conta nova: na API o favorito fica salvo, e na conta demo o teste só passaria uma vez
+  await entrarComContaNova(page);
   await aguardarCatalogo(page);
 
   const favorito = cartoes(page).locator('button[aria-pressed]').first();

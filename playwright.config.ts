@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const PORTA = 4173;
+// Outra porta quando roda contra a API, para não reaproveitar um preview com o MSW embutido.
+const PORTA = Number(process.env.PW_PORTA ?? 4173);
 const BASE = `http://127.0.0.1:${PORTA}`;
 
 // Permite apontar para um Chromium ja instalado (CI ou container sem download).
@@ -30,7 +31,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'npm run build && npm run preview -- --port 4173 --host 127.0.0.1',
+    command: `npm run build && npm run preview -- --port ${PORTA} --host 127.0.0.1`,
     url: BASE,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

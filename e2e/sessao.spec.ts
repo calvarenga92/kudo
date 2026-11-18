@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { CONTA, entrar, limparEstado } from './apoio';
+import { BASE_API, CONTA, entrar, entrarComContaNova, limparEstado } from './apoio';
 
 test.beforeEach(async ({ page }) => { await limparEstado(page); });
 
@@ -41,13 +41,27 @@ test('rota protegida redireciona para entrar e preserva o destino', async ({ pag
   await expect(page).toHaveURL(/\/entrar\?destino=%2Fperfil/);
 });
 
-test('sessao expirada nao deixa o usuario preso numa tela logada', async ({ page }) => {
-  // o cenario faz a sessao nascer ja vencida, como acontece ao voltar horas depois
-  await page.goto('/entrar?cenario=sessao-expirada');
-  await page.getByLabel('E-mail').fill(CONTA.email);
-  await page.getByLabel('Senha').fill(CONTA.senha);
-  await page.getByRole('button', { name: 'Entrar' }).click();
-
+/**
+ * O servidor deixa de reconhecer o token (venceu, ou a pessoa saiu em outro aparelho) com a
+ * página ainda achando que está logada. Antes isto era simulado com uma sessão que já nascia
+ * vencida, e o teste passava sem o token chegar a ser aceito. Agora o token vale primeiro e
+ * é revogado depois.
+ */
+test('sessao encerrada no servidor nao deixa o usuario preso numa tela logada', async ({ page }) => {
+  await entrarComContaNova(page);
   await page.goto('/perfil');
+  await expect(page).toHaveURL(/\/perfil/);
+
+  const status = await page.evaluate(async (base) => {
+    const token = sessionStorage.getItem('kudo.token');
+    const r = await fetch(`${base}/sessao`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return r.status;
+  }, BASE_API);
+  expect(status).toBe(204);
+
+  await page.reload();
   await expect(page).toHaveURL(/\/entrar/);
 });

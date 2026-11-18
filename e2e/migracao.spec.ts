@@ -1,7 +1,10 @@
 import { expect, test } from '@playwright/test';
-import { adicionarPrimeiraPeca, aguardarCatalogo, cartoes, limparEstado } from './apoio';
+import { adicionarPrimeiraPeca, aguardarCatalogo, cartoes, limparEstado, soNoMock } from './apoio';
 
-test.beforeEach(async ({ page }) => { await limparEstado(page); });
+test.beforeEach(async ({ page }) => {
+  soNoMock('migra o estado que o MSW guarda no localStorage');
+  await limparEstado(page);
+});
 
 /**
  * Quem visitou antes da troca das artes tem o estado do mock salvo com

@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { aguardarCatalogo, cartoes, limparEstado, precoEmNumero, url } from './apoio';
+import { aguardarCatalogo, cartoes, limparEstado, precoEmNumero, soNoMock, url } from './apoio';
 
 test.beforeEach(async ({ page }) => { await limparEstado(page); });
 
@@ -40,11 +40,13 @@ test('paginacao navega e mantem a pagina na URL', async ({ page }) => {
 });
 
 test('filtro sem resultado mostra estado vazio, nao tela quebrada', async ({ page }) => {
+  soNoMock('cenário lista-vazia');
   await page.goto(url('/', { cenario: 'lista-vazia' }));
   await expect(page.getByText('Nenhuma peça encontrada')).toBeVisible();
 });
 
 test('falha do servidor mostra erro com acao de repetir', async ({ page }) => {
+  soNoMock('cenário erro-servidor');
   await page.goto(url('/', { cenario: 'erro-servidor' }));
   await expect(page.getByRole('alert')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Tentar de novo' })).toBeVisible();

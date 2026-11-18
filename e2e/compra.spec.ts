@@ -1,7 +1,13 @@
 import { expect, test } from '@playwright/test';
-import { adicionarPrimeiraPeca, entrar, limparEstado, url } from './apoio';
+import {
+  adicionarPeca, adicionarPrimeiraPeca, cadastrarCarteira, CARTEIRA_RECUSADA, contraApi,
+  entrarComContaNova, limparEstado, url,
+} from './apoio';
 
 test.beforeEach(async ({ page }) => { await limparEstado(page); });
+
+/** Uma peça diferente por teste e por projeto (desktop 1–3, mobile 4–6); a 8ª está esgotada. */
+const pecaDaCompra = (n: 1 | 2 | 3) => n + (test.info().project.name === 'mobile' ? 3 : 0);
 
 test('carrinho vazio orienta o proximo passo', async ({ page }) => {
   await page.goto('/carrinho');
@@ -58,10 +64,11 @@ test('cupom expirado tem mensagem propria', async ({ page }) => {
 });
 
 test('compra completa leva ao recibo e esvazia o carrinho', async ({ page }) => {
-  await entrar(page);
-  await adicionarPrimeiraPeca(page);
+  await entrarComContaNova(page);
+  await adicionarPeca(page, pecaDaCompra(1));
 
   await page.goto('/pagamento');
+  await cadastrarCarteira(page);
   await page.getByRole('button', { name: 'Confirmar compra' }).click();
 
   await page.waitForURL(/\/pedido\//);
@@ -72,10 +79,17 @@ test('compra completa leva ao recibo e esvazia o carrinho', async ({ page }) => 
 });
 
 test('pagamento recusado mostra o motivo em vez de confirmar', async ({ page }) => {
-  await entrar(page);
-  await adicionarPrimeiraPeca(page);
+  await entrarComContaNova(page);
+  await adicionarPeca(page, pecaDaCompra(2));
 
-  await page.goto(url('/pagamento', { cenario: 'pagamento-recusado' }));
+  // no mock a recusa é um cenário; na API, carteira terminada em "dead" (README da kudo-api)
+  if (contraApi) {
+    await page.goto('/pagamento');
+    await cadastrarCarteira(page, CARTEIRA_RECUSADA);
+  } else {
+    await page.goto(url('/pagamento', { cenario: 'pagamento-recusado' }));
+    await cadastrarCarteira(page);
+  }
   await page.getByRole('button', { name: 'Confirmar compra' }).click();
 
   await page.waitForURL(/\/pedido\//);
@@ -83,9 +97,10 @@ test('pagamento recusado mostra o motivo em vez de confirmar', async ({ page }) 
 });
 
 test('recibo continua acessivel ao recarregar', async ({ page }) => {
-  await entrar(page);
-  await adicionarPrimeiraPeca(page);
+  await entrarComContaNova(page);
+  await adicionarPeca(page, pecaDaCompra(3));
   await page.goto('/pagamento');
+  await cadastrarCarteira(page);
   await page.getByRole('button', { name: 'Confirmar compra' }).click();
   await page.waitForURL(/\/pedido\//);
 
