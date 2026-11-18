@@ -51,6 +51,9 @@ test('sessao encerrada no servidor nao deixa o usuario preso numa tela logada', 
   await entrarComContaNova(page);
   await page.goto('/perfil');
   await expect(page).toHaveURL(/\/perfil/);
+  // a página só monta depois de o app (e, no mock, o MSW) subir; antes disso o fetch
+  // abaixo passaria por fora do mock
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 
   const status = await page.evaluate(async (base) => {
     const token = sessionStorage.getItem('kudo.token');

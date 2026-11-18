@@ -3,14 +3,12 @@
  * A regra vive no pacote compartilhado com o app mobile; este arquivo só a reexporta
  * para que nenhum import do app precise mudar.
  *
- * A exibição é a única coisa local: o pacote formata com ponto decimal e aqui o
- * texto passa para o padrão brasileiro. O valor em si nunca é convertido.
+ * A exibição em ETH também vem do pacote, já no padrão brasileiro ("1,99 ETH"),
+ * igual no app mobile. O valor em si nunca é convertido.
  */
-import { formatarEth as formatarEthComPonto } from '@calvarenga92/kurio-regras';
-
 export {
-  paraUnidades, paraTexto, somar, subtrair, multiplicar, percentual, comparar, menor,
-} from '@calvarenga92/kurio-regras';
+  paraUnidades, paraTexto, somar, subtrair, multiplicar, percentual, comparar, menor, formatarEth,
+} from '@calvarenga92/kudo-regras';
 
 /**
  * Converte um número em texto decimal ("1234.5") para o padrão brasileiro
@@ -23,8 +21,3 @@ export function paraExibicao(texto: string): string {
   return `${negativo ? '-' : ''}${agrupada}${decimal === undefined ? '' : `,${decimal}`}`;
 }
 
-/** Valor em ETH pronto para a tela: "1,99 ETH", "0,0042 ETH". */
-export function formatarEth(valor: string): string {
-  const [numero, ...resto] = formatarEthComPonto(valor).split(' ');
-  return [paraExibicao(numero), ...resto].join(' ');
-}

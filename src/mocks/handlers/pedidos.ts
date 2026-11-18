@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { CABECALHO_IDEMPOTENCIA, criarGuardaIdempotente } from '@calvarenga92/kurio-regras';
+import { CABECALHO_IDEMPOTENCIA, criarGuardaIdempotente } from '@calvarenga92/kudo-regras';
 import type { ItemPedido, Pedido } from '@/api/tipos';
 import { atrasar, cenarioEh } from '../cenarios';
 import { erro, naoAutenticado, naoEncontrado, tokenDaRequisicao } from '../respostas';

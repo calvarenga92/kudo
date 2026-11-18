@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CABECALHO_IDEMPOTENCIA, criarTentativaPagamento } from '@calvarenga92/kurio-regras';
+import { CABECALHO_IDEMPOTENCIA, criarTentativaPagamento } from '@calvarenga92/kudo-regras';
 import { cliente, ErroApi } from '@/api/cliente';
 import { chaves } from '@/api/consultas';
 import type { Pedido } from '@/api/tipos';

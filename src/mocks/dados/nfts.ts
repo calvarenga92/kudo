@@ -96,7 +96,7 @@ export const NFTS: Nft[] = CATALOGO.map((item, i) => {
 });
 
 /** Regra de cupom compartilhada com o app mobile. */
-export { CUPONS } from '@calvarenga92/kurio-regras';
+export { CUPONS } from '@calvarenga92/kudo-regras';
 
 export const USUARIOS = [
   {

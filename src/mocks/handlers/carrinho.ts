@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import type { Cotacao, ItemCarrinho } from '@/api/tipos';
-import { calcularTotais, subtotalDoItem, versaoDaCotacao } from '@calvarenga92/kurio-regras';
+import { calcularTotais, subtotalDoItem, versaoDaCotacao } from '@calvarenga92/kudo-regras';
 import { atrasar, cenarioEh } from '../cenarios';
 import { erro, falhaTransitoria, naoEncontrado, tokenDaRequisicao } from '../respostas';
 import { carrinhoDe, contaDaSessao, estado, persistir } from '../store';
